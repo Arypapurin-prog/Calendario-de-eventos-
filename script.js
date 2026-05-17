@@ -1,14 +1,19 @@
-script.js
 const form = document.getElementById('eventForm');
 const titleInput = document.getElementById('title');
 const dateInput = document.getElementById('date');
+const categoryInput = document.getElementById('category');
 const eventList = document.getElementById('eventList');
 const message = document.getElementById('message');
+const totalEvents = document.getElementById('totalEvents');
 
 let events = JSON.parse(localStorage.getItem('events')) || [];
 
 function saveEvents() {
     localStorage.setItem('events', JSON.stringify(events));
+}
+
+function updateStats() {
+    totalEvents.textContent = events.length;
 }
 
 function renderEvents() {
@@ -18,7 +23,12 @@ function renderEvents() {
         const li = document.createElement('li');
 
         li.innerHTML = `
-            <span>${event.title} - ${event.date}</span>
+            <div>
+                <strong>${event.title}</strong><br>
+                📅 ${event.date}<br>
+                🏷️ ${event.category}
+            </div>
+
             <div class="actions">
                 <button onclick="editEvent(${index})">Editar</button>
                 <button onclick="deleteEvent(${index})">Eliminar</button>
@@ -27,6 +37,8 @@ function renderEvents() {
 
         eventList.appendChild(li);
     });
+
+    updateStats();
 }
 
 form.addEventListener('submit', (e) => {
@@ -34,36 +46,14 @@ form.addEventListener('submit', (e) => {
 
     const title = titleInput.value.trim();
     const date = dateInput.value;
+    const category = categoryInput.value.trim();
 
-    if (title === '' || date === '') {
+    if (title === '' || date === '' || category === '') {
         message.textContent = 'Todos los campos son obligatorios';
         return;
     }
 
-    message.textContent = '';
+    const currentDate = new Date().toISOString().split('T')[0];
 
-    events.push({ title, date });
-
-    saveEvents();
-    renderEvents();
-
-    form.reset();
-});
-
-function deleteEvent(index) {
-    events.splice(index, 1);
-    saveEvents();
-    renderEvents();
-}
-
-function editEvent(index) {
-    const newTitle = prompt('Editar nombre del evento:', events[index].title);
-
-    if (newTitle !== null && newTitle.trim() !== '') {
-        events[index].title = newTitle;
-        saveEvents();
-        renderEvents();
-    }
-}
-
+    if (date < currentDate) {
 renderEvents();
