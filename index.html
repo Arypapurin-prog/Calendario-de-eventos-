@@ -4,60 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario de Eventos</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
+
         <h1>🎌 Calendario de Eventos</h1>
 
         <form id="eventForm">
-            <input type="text" id="title" placeholder="Nombre del evento">
 
-            <input type="date" id="date">
+            <input 
+                type="text" 
+                id="title"
+                placeholder="Nombre del evento"
+            >
 
-            <input type="text" id="category" placeholder="Categoría del evento">
+            <input 
+                type="date" 
+                id="date"
+            >
 
-            <button type="submit">Agregar Evento</button>
+            <input 
+                type="text" 
+                id="category"
+                placeholder="Categoría"
+            >
+
+            <button type="submit">
+                Agregar Evento
+            </button>
+
         </form>
 
-        <div id="message"></div>
+        <p id="message"></p>
 
         <div class="stats">
-            Total de eventos: <span id="totalEvents">0</span>
+            Eventos registrados:
+            <span id="totalEvents">0</span>
         </div>
 
         <ul id="eventList"></ul>
+
     </div>
 
     <script src="script.js"></script>
-</body>
-</html>
-```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario de Eventos</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
 
-    <div class="container">
-        <h1>Calendario de Eventos</h1>
-
-        <form id="eventForm">
-            <input type="text" id="title" placeholder="Nombre del evento">
-            <input type="date" id="date">
-            <button type="submit">Agregar Evento</button>
-        </form>
-
-        <div id="message"></div>
-
-        <ul id="eventList"></ul>
-    </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
