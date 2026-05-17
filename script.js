@@ -12,9 +12,7 @@ const message = document.getElementById("message");
 
 const totalEvents = document.getElementById("totalEvents");
 
-let events = JSON.parse(
-    localStorage.getItem("events")
-) || [];
+let events = JSON.parse(localStorage.getItem("events")) || [];
 
 renderEvents();
 
@@ -43,10 +41,9 @@ form.addEventListener("submit", function(e){
     message.textContent = "";
 
     const event = {
-
-        title,
-        date,
-        category
+        title: title,
+        date: date,
+        category: category
     };
 
     events.push(event);
@@ -70,7 +67,7 @@ function renderEvents(){
 
     eventList.innerHTML = "";
 
-    events.forEach((event,index)=>{
+    events.forEach((event, index) => {
 
         const li =
         document.createElement("li");
@@ -109,11 +106,12 @@ function renderEvents(){
 
 function deleteEvent(index){
 
-    if(confirm(
-        "¿Deseas eliminar este evento?"
-    )){
+    const confirmDelete =
+    confirm("¿Deseas eliminar este evento?");
 
-        events.splice(index,1);
+    if(confirmDelete){
+
+        events.splice(index, 1);
 
         saveEvents();
 
@@ -123,21 +121,39 @@ function deleteEvent(index){
 
 function editEvent(index){
 
+    let event = events[index];
+
     const newTitle = prompt(
-        "Editar evento:",
-        events[index].title
+        "Editar nombre:",
+        event.title
     );
 
-    if(
-        newTitle !== null &&
-        newTitle.trim() !== ""
-    ){
+    if(newTitle === null) return;
 
-        events[index].title =
-        newTitle;
+    const newDate = prompt(
+        "Editar fecha (YYYY-MM-DD):",
+        event.date
+    );
 
-        saveEvents();
+    if(newDate === null) return;
 
-        renderEvents();
-    }
+    const newCategory = prompt(
+        "Editar categoría:",
+        event.category
+    );
+
+    if(newCategory === null) return;
+
+    events[index] = {
+
+        title: newTitle.trim(),
+
+        date: newDate.trim(),
+
+        category: newCategory.trim()
+    };
+
+    saveEvents();
+
+    renderEvents();
 }
